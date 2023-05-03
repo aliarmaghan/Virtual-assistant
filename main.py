@@ -19,6 +19,7 @@ def talk(text):
 def take_command():
     try:
         with sr.Microphone() as source:
+            listener.adjust_for_ambient_noise(source, duration=1)
             print('listening...!!!')
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
@@ -50,8 +51,9 @@ def run_alexa():
         print(info)
         talk(info)
     elif 'how are you' in command:
-        about = command.replace('how are you', '')
         talk('I am fine, thanks. How about you')
+    elif 'fine' in command:
+        talk('How can i help you')
     elif 'date' in command:
         talk('sorry, I have a headache')
     elif 'single' in command:
@@ -60,6 +62,9 @@ def run_alexa():
         jokes = pyjokes.get_joke()
         print(jokes)
         talk(jokes)
+    elif 'bye' in command:
+        talk('no problem bye')
+        pass
     else:
         talk('Pardon, Please say it again')
 
